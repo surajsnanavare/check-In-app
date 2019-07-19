@@ -1,0 +1,17 @@
+html {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    -ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
+}
+
+body {
+	margin: 0
+}
+
+html,
+body {
+	font-family: Verdana, sans-serif;
+	font-size: 15px;
+	line-height: 1.5
+}
