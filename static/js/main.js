@@ -1,10 +1,20 @@
+/**
+ * Author      : Suraj Nanavare
+ * Created At  : 19th July 2019
+ * Description : This is a commom javascript file for CheckIn app project. It contains 
+ *               API calls and normal javascript functions. 
+ * Modified At : 20th July 2019
+ */
+
+ 
+/** Configuration Contants **/
 PROJECT_DETAILS_ENDPOINT = "APIs/get_project_details.php?f=";
 CHECKIN_API_ENDPOINT = "APIs/checkin_student.php";
 RESET_CHECKIN_API_ENDPOINT = "APIs/reset_checkin.php";
 TOTAL_PAGES = 1;
 PER_PAGE_RECORDS = 7;
 
-/*** Function to get current time for Check-In ***/
+/** Function to get current time for Check-In **/
 function get_current_time() {
     var date = new Date();
     var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
@@ -14,12 +24,12 @@ function get_current_time() {
     return time;
 };
 
-/*** Function for pagination ***/
+/** Function for pagination **/
 function pagination() {
     var curr_page = document.getElementById("current_page").value;
     var total_pages = document.getElementById("total_pages").value;
     var records = document.getElementsByClassName('record');
-    
+
     if (curr_page == 1) {
         document.getElementById("prev_button").setAttribute('disabled', 'disabled');
 
@@ -45,7 +55,7 @@ function pagination() {
     }
 }
 
-/*** Function to navigate Back and Forth in records in pagination ***/
+/** Function to navigate Back and Forth in records in pagination **/
 function navigate_page(direction) {
     var curr_page = document.getElementById("current_page");
     var total_pages = document.getElementById("total_pages").value;
@@ -59,7 +69,7 @@ function navigate_page(direction) {
     pagination();
 }
 
-/*** Function to get project & respective student details with checkIn and Reset button ***/
+/** Function to get project & respective student details with checkIn and Reset button **/
 function get_project_details() {
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
@@ -126,7 +136,7 @@ function get_project_details() {
     xmlhttp.send();
 }
 
-/*** Function to add time of checking in file ***/
+/** Function to add time of checking in file **/
 function checkin_student(obj) {
     var id_number = obj.id.split("_")[1];
     var checkin_time = get_current_time();
@@ -152,7 +162,7 @@ function checkin_student(obj) {
     xmlhttp.send();
 }
 
-/*** Function to reset checkIn time of indivisual student ***/
+/** Function to reset checkIn time of indivisual student **/
 function reset_checkin(obj) {
     var id_number = obj.id.split("_")[1];
     var name = document.getElementById('name_' + id_number).innerText;
@@ -177,7 +187,7 @@ function reset_checkin(obj) {
     xmlhttp.send();
 }
 
-/*** Function to reset checkIn time of  all students ***/
+/** Function to reset checkIn time of  all students **/
 function reset_all_checkins() {
     if (confirm("Do you really want to reset all?")) {
         var url = new URL(window.location.href);
