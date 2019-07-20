@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>Projects</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./static/css/main.css"/>
+        <script src="./static/js/main.js"></script>
+
+        <!-- External CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="main">
+            <!-- Page Header Section -->
+            <div class="container header">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <p class="main-text" style="color:white"><b>Projects</b></p>
+                        </td>
+                        <td>
+                            <button class="btn btn-orange float-right" name="add_new_project" onclick="open_modal(this)">New Project</button>            
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Page Body Section -->
+            <div class="body">
+                <table cellspacing="3" align="center">
+                    <tr>
+                        <td class="name-td">Nandhasdh Nanavare</td>
+                        <td class="">
+                                <button class="btn btn-small btn-teal p10" name="view_student" id="" onclick="open_modal(this)"> &nbsp; &nbsp;View &nbsp; &nbsp;</button>
+                            <button class="btn btn-small btn-teal p10" name="add_student" onclick="open_modal(this)"> Add Student</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal : Add new project -->
+        <div id="add_new_project" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <center>
+                        <input class="input" type="text" id="new_project_name" placeholder="Enter Project Name"/>
+                        <button class="btn" onclick="add_new_project(this)">Add</button>&nbsp;&nbsp;&nbsp;<button class="btn" name="add_new_project" onclick="close_modal(this)">Cancel</button>
+                    </center>
+                </div>
+        </div>
+
+        <!-- Modal : Add Student -->
+        <div id="add_student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <center>
+                        <input class="input" type="text" id="new_student_fname" placeholder="Name First Name"/>
+                        <input class="input" type="text" id="new_student_lname" placeholder="Name Last Name"/>
+                        <button class="btn">Add</button>&nbsp;&nbsp;&nbsp;<button class="btn" name="add_student" onclick="close_modal(this)">Cancel</button>
+                </center>
+            </div>
+        </div>
+
+        <!-- Modal : View Students -->
+        <div id="view_student" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div style="max-height: 50%;overflow-y: scroll;">
+                    <table width="90%" align="center">
+                        <tr>
+                            <th>Last Name</th><th>First Name</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center">Nanavare</td><td style="text-align: center">Suraj</td>
+                        </tr>
+                    </table>            
+                </div>
+                <center>
+                    <button class="btn" name="view_student" onclick="close_modal(this)">Close</button>
+                </center>
+            </div>
+        </div>
+            
+    </body>
+</html>

@@ -13,9 +13,9 @@
             }
         </style>
     </head>
-    <body>
+    <body  onload="get_project_details()">
         <div class="main">
-
+            <iframe id="frmFile" src="../data/robotic_19-07-2019.txt" onload="LoadFile();" style="display: none;"></iframe>
             <!-- Page Header Section -->
             <div class="container header">
                 <p class="main-text"><b>Project :</b> <span id="project_name">Robotics</span></p>
@@ -24,47 +24,8 @@
     
             <!-- Page Body Section -->
             <div class="body">
-                    <table cellspacing="5" align="center">
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
-                            <tr>
-                                <td class="name-td">Nandhasdh Nanavare</td>
-                                <td class="action-td p10">08:10:10</td>
-                            </tr>
+                    <table cellspacing="5" align="center" id="student_list">
+                        <tr><td>No Data Available!</td></tr>
                     </table>
                 </div>
     

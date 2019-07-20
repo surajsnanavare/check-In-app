@@ -8,87 +8,18 @@
         <!-- External CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    <body>
+    <body onload="get_project_details()">
         <div class="main">
             <!-- Page Header Section -->
             <div class="container header">
-                <p class="main-text"><b>Project :</b> <span id="project_name">Robotics</span></p>
-                <p class="main-text"><b>Date :</b> <span id="date">19-07-2019</span></p>
+                <p class="main-text"><b>Project :</b> <span id="project_name"></span></p>
+                <p class="main-text"><b>Date :</b> <span id="date"></span></p>
             </div>
 
             <!-- Page Body Section -->
             <div class="body">
-                <table cellspacing="3" align="center">
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="name-td">Nandhasdh Nanavare</td>
-                            <td class="action-td">
-                                <button class="btn btn-small btn-teal p10 ">Check In</button>
-                                <button  class="btn btn-small btn-teal p10 "><i class="fa fa-rotate-left"></i> </button>
-                            </td>
-                        </tr>
+                <table cellspacing="3" align="center" id="student_list">
+                       <tr><td>No Students</td></tr>
                 </table>
             </div>
 
@@ -97,7 +28,7 @@
                 <table align="center">
                     <tr>
                         <td>
-                            <button class="btn btn-medium btn-blue float-left">Previous </button>
+                            <button class="btn btn-medium btn-blue float-left"> Previous </button>
                         </td>
                         <td>
                             <button  class="btn btn-medium btn-blue  float-right"> Next </button>

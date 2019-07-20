@@ -31,20 +31,11 @@ body {
     color: white;
     padding: 10px;
     padding-left:20px;
-    /* position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%; */
 }
 .main > .body{
-    /* padding: 10px; */
     font-size: 1.1px;
-    /* margin-top: 75px;
-    margin-bottom: 40px; */
-    /* height: 60%;
-    overflow: scroll; */
 }
-.header > .main-text{
+.main-text{
     font-size: 1.1em;
     margin-top: 0%;
     margin-bottom: 0%;
@@ -90,13 +81,13 @@ body {
     color:#fff!important;
     background-color: blue !important;
 }
-
-@media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    [class="main"] {
-        max-width: 100%;
-        border: none;
-    }
+.btn-green {
+    color:#fff!important;
+    background-color: green !important;
+}
+.btn-orange{
+    color:black;
+    background-color: orange !important;
 }
 .float-left { 
     float:left;
@@ -127,11 +118,59 @@ body {
     padding-left: 5px;
 }
 .action-td{
-    width: 30%;
+    width: 25%;
     text-align: center;
     padding-right: 5px; 
 }
 td {
     font-size: 0.9em;
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class="main"] {
+        max-width: 100%;
+        border: none;
+    }
 }
 
