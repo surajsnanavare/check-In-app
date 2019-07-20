@@ -1,4 +1,3 @@
-REPORT_API_ENDPOINT = "./../APIs/get_project_details.php?f=";
 PROJECT_DETAILS_ENDPOINT = "APIs/get_project_details.php?f=";
 CHECKIN_API_ENDPOINT = "APIs/checkin_student.php";
 RESET_CHECKIN_API_ENDPOINT = "APIs/reset_checkin.php";
@@ -16,7 +15,7 @@ function get_project_details(){
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
     
-    if(url.pathname.indexOf('/report/')> 0){
+    if(url.pathname.indexOf('/report.html')> 0){
         is_report = 1
     }else{
         is_report = 0
@@ -72,11 +71,7 @@ function get_project_details(){
       }
     };
     
-    if(is_report>0){
-        xmlhttp.open("GET", REPORT_API_ENDPOINT + project_name, true);
-    }else{
-        xmlhttp.open("GET", PROJECT_DETAILS_ENDPOINT + project_name, true);
-    }
+    xmlhttp.open("GET", PROJECT_DETAILS_ENDPOINT + project_name, true);
     xmlhttp.send();
 }
 
