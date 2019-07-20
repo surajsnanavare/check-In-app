@@ -15,7 +15,7 @@ function get_project_details(){
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
     
-    if(url.pathname.indexOf('/report.html')> 0){
+    if(url.pathname.indexOf('/report')>=0){
         is_report = 1
     }else{
         is_report = 0
