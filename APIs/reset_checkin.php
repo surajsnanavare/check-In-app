@@ -22,7 +22,7 @@
                 if(isset($fname) && isset($lname)){
                     // echo trim($fname),$requested_fname;
                     if(trim($lname) == trim($requested_lname) && trim($fname) == trim($requested_fname)){
-                        $entry_with_checkin_time = $name[0].",".$fname.",".$checkin_time."\n";
+                        $entry_with_checkin_time = $name[0].",".$fname."\n";
                         $raw_string = $raw_string.$entry_with_checkin_time;
                     }
                     else{
@@ -36,7 +36,7 @@
         $newfile = fopen($file_path, "w") or die("Unable to open file!");
         fwrite($newfile,$raw_string);
         fclose($newfile);
-        echo $checkin_time;
+        echo "1";
     }catch(Exception $e){
         echo "Checkin Failed!";
     }
