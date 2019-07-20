@@ -1,41 +1,66 @@
 <html>
-    <head>
-        <title>Student Check In</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./static/css/main.css"/>
-        <script src="./static/js/main.js"></script>
 
+<head>
+    <title>Student Check In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/main.css" />
+    <script src="./static/js/main.js"></script>
         <!-- External CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-    <body onload="get_project_details()">
-        <div class="main">
-            <!-- Page Header Section -->
-            <div class="container header">
-                <p class="main-text"><b>Project :</b> <span id="project_name">No Project</span></p>
-                <p class="main-text"><b>Date :</b> <span id="date">No Date</span></p>
-            </div>
+</head>
 
-            <!-- Page Body Section -->
-            <div class="body">
-                <table cellspacing="3" align="center" id="student_list">
-                       <tr><td>No Students</td></tr>
-                </table>
-            </div>
+<!-- Hidden Pagination Counters -->
+<input type="text" id="current_page" value="1" style="display: none;">
+<input type="text" id="total_pages" value="" style="display: none;">
 
-            <!-- Page Navigation Section -->
-            <div class="container navigation">
-                <table align="center">
-                    <tr>
-                        <td>
-                            <button class="btn btn-medium btn-blue float-left"> Previous </button>
-                        </td>
-                        <td>
-                            <button  class="btn btn-medium btn-blue  float-right"> Next </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+<body onload="get_project_details()">
+    <div class="main">
+        <!-- Page Header Section -->
+        <div class="container header">
+            <table width="100%">
+                <tr>
+                    <td style="color: white;">
+                        <p class="main-text"><b>Project :</b> <span id="project_name">No Project</span></p>
+                        <p class="main-text"><b>Date :</b> <span id="date">No Date</span></p>
+                    </td>
+                    <td style="color: white;">
+                        <button onclick="reset_all_checkins()" class="float-right">Reset All</button>
+                    </td>
+                </tr>
+            </table>
         </div>
-    </body>
+
+        <!-- Page Body Section -->
+        <div class="body">
+            <table cellspacing="3" align="center" id="student_list">
+                <tr>
+                    <td>No Students</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Page Navigation Section -->
+        <div class="container navigation">
+            <table align="center">
+                <!-- <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <span id="current_page_label"></span>/<span id="total_pages_label"></span>
+                        </td>
+                    </tr> -->
+                <tr>
+                    <td>
+                        <button class="btn btn-medium btn-blue float-left" id="prev_button" onclick='navigate_page("Prev")'> Previous </button>
+                    </td>
+                    <td>
+                        <span id="current_page_label"></span>/<span id="total_pages_label"></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-medium btn-blue  float-right" id="next_button" onclick='navigate_page("Next")'> Next </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
 </html>
