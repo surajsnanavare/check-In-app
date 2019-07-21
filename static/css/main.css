@@ -143,12 +143,6 @@ td {
 	font-size: 0.9em;
 }
 
-@media (max-width: 267px) {
-	/* For mobile phones: */
-	.btn-small {
-		margin-left: 1px;
-	}
-}
 @media only screen and (max-width: 768px) {
 	/* For mobile phones: */
 	[class="main"] {
