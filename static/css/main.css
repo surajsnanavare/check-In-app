@@ -125,7 +125,7 @@ body {
 
 .btn-medium {
 	font-size: 0.9em;
-	width: 130px;
+	width: 100px;
 	margin: 10px;
 }
 
@@ -136,7 +136,7 @@ body {
 }
 
 .action-td {
-	width: 25%;
+	width: 50%;
 	text-align: center;
 	padding-right: 5px;
 }

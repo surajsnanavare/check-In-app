@@ -1,13 +1,13 @@
-<!--
- * Author      : Suraj Nanavare
- * Created At  : 19th July 2019
- * Description : This API marks check-In time of student. It read records one by one 
-                 from file and add timestamp for the record who's 1st name and last name
-                 is exactly matched with suppiled record by user.
- * Email ID    : surajsnanavare@gmail.com
- *-->
-
 <?php
+
+    /*
+    * Author      : Suraj Nanavare
+    * Created At  : 19th July 2019
+    * Description : This API marks check-In time of student. It read records one by one 
+    *               from file and add timestamp for the record who's 1st name and last name
+    *               is exactly matched with suppiled record by user.
+    * Email ID    : surajsnanavare@gmail.com
+    */
 
     try{
         /* Read parameters f: Project name, name: name of student, and checkin time. */
