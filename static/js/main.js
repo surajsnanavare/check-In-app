@@ -96,18 +96,20 @@ function get_project_details() {
                 timestamp = students[i].timestamp;
                 if (is_report == 0) {
                     if (timestamp) {
-                        student = '<tr class="record">\
-                                    <td class="name-td" id="name_' + i + '">' + name + '</td> \
-                                    <td class="action-td"> \
-                                        <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)" disabled>' + timestamp + '</button> \
-                                        <button  class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)"><img src="checkinapp/../static/icons/undo.png" width="10px"></button> \
-                                    </td>\
-                                </tr>';
+                        student = '<tr class="record" style="display: contents">\
+                                        <td class="name-td" id="name_' + i + '">' + name + '</td> \
+                                        <td class="action-td"> \
+                                            <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)" disabled>' + timestamp + '</button> \
+                                        </td><td>\
+                                            <button class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)"><img src="checkinapp/../static/icons/undo.png" width="10px"></button> \
+                                        </td>\
+                                    </tr>';
                     } else {
                         student = '<tr class="record">\
                                     <td class="name-td" id="name_' + i + '">' + name + '</td> \
-                                    <td class="action-td"> \
+                                    <td class="action-td" style="display:contents"> \
                                         <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)">Check In</button> \
+                                    </td><td>\
                                         <button  class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)" disabled><img src="checkinapp/../static/icons/undo.png" width="10px"></button> \
                                     </td>\
                                 </tr>';
