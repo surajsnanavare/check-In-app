@@ -24,51 +24,6 @@ function get_current_time() {
     return time;
 };
 
-/** Function for pagination **/
-function pagination() {
-    var curr_page = document.getElementById("current_page").value;
-    var total_pages = document.getElementById("total_pages").value;
-    var records = document.getElementsByClassName('record');
-
-    if (curr_page == 1) {
-        document.getElementById("prev_button").setAttribute('disabled', 'disabled');
-
-    } else {
-        document.getElementById("prev_button").removeAttribute('disabled');
-    }
-
-    if (curr_page == total_pages) {
-        document.getElementById("next_button").setAttribute('disabled', 'disabled');
-    } else {
-        document.getElementById("next_button").removeAttribute('disabled');
-    }
-
-    document.getElementById("current_page_label").innerText = curr_page;
-    document.getElementById("total_pages_label").innerText = total_pages;
-
-    for (record = 0; record < records.length; record++) {
-        if (record < (curr_page * PER_PAGE_RECORDS) && record >= (curr_page * PER_PAGE_RECORDS) - PER_PAGE_RECORDS) {
-            records[record].style.display = "";
-        } else {
-            records[record].style.display = "none";
-        }
-    }
-}
-
-/** Function to navigate Back and Forth in records in pagination **/
-function navigate_page(direction) {
-    var curr_page = document.getElementById("current_page");
-    var total_pages = document.getElementById("total_pages").value;
-    curr_page_value = curr_page.value;
-    if (direction == "Next") {
-        next_page = Number(curr_page_value) + Number(1);
-    } else if (direction == "Prev") {
-        next_page = Number(curr_page_value) - Number(1);
-    }
-    curr_page.value = next_page;
-    pagination();
-}
-
 /** Function to get project & respective student details with checkIn and Reset button **/
 function get_project_details() {
     var url = new URL(window.location.href);
@@ -96,7 +51,7 @@ function get_project_details() {
                 timestamp = students[i].timestamp;
                 if (is_report == 0) {
                     if (timestamp) {
-                        student = '<tr class="record" style="display: contents">\
+                        student = '<tr class="record">\
                                         <td class="name-td" id="name_' + i + '">' + name + '</td> \
                                         <td class="action-td"> \
                                             <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)" disabled>' + timestamp + '</button> \
@@ -130,7 +85,6 @@ function get_project_details() {
             } else {
                 document.getElementById('student_list').innerHTML = "<tr><td>No Students</td></tr>";
             }
-            pagination();
         }
     };
 
