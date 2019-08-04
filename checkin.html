@@ -1,13 +1,15 @@
 <html>
 
 <head>
-    <title>Student Check In</title>
+    <title>Coordinator page </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
 
+    <meta http-equiv=”Expires” content=”-1″>
+    <meta http-equiv=”CACHE-CONTROL” content=”NO-CACHE”>
+    
     <link rel="stylesheet" href="./static/css/main.css" />
     <script src="./static/js/main.js"></script>
 </head>
@@ -16,15 +18,15 @@
 <input type="text" id="current_page" value="1" style="display: none;">
 <input type="text" id="total_pages" value="" style="display: none;">
 
-<body onload="get_project_details()">
+<body onload="get_project_details()">  <!-- call get_project_details function from JS to populate student details --> 
     <div class="main">
         <!-- Page Header Section -->
         <div class="container header">
             <table width="100%">
                 <tr>
                     <td style="color: white;">
-                        <p class="main-text"><b>Project :</b> <span id="project_name">No Project</span></p>
-                        <p class="main-text"><b>Date :</b> <span id="date">No Date</span></p>
+                        <p class="main-text"><b>Project:</b> <span id="project_name">Loading ...</span></p>
+                        <p class="main-text"><b></b> <span id="date"></span></p>
                     </td>
                     <td style="color: white;">
                         <button onclick="reset_all_checkins()" class="float-right">Reset All</button>
@@ -35,9 +37,9 @@
 
         <!-- Page Body Section -->
         <div class="body">
-            <table cellspacing="3" align="center" id="student_list">
+            <table cellspacing="10" align="left" id="student_list">    <!-- gets list of students from -->
                 <tr>
-                    <td>No Students</td>
+                    <td>Loading ...</td>
                 </tr>
             </table>
         </div>

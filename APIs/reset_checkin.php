@@ -1,13 +1,6 @@
 <?php
 
-    /*
-    * Author      : Suraj Nanavare
-    * Created At  : 19th July 2019
-    * Description : This is API to "Reset" checkIn for indivisual student and "Reset All"
-    *               to rest check-ins for all students at a time. 
-    * Email ID    : surajsnanavare@gmail.com
-    */
-    
+  
     try {
         /* Read parameters f : project filename, name: name of student and reset_all Parameter. */
         $file_name = $_GET['f'];
@@ -35,7 +28,7 @@
                     "lname" => $lname[1]
                 );
                 if (isset($fname) && isset($lname)) {
-                    if (trim($lname) == trim($requested_lname) && trim($fname) == trim($requested_fname) || $reset_all == 1) {
+                    if (trim($lname) == trim($requested_lname) && trim($fname) == trim($requested_fname) || $reset_all == 1) {  //JS function calls with flag of 0 for one student OR 1 for all students
                         $entry_with_checkin_time = $name[0] . "," . $fname . "\n";
                         $raw_string              = $raw_string . $entry_with_checkin_time;
                     } else {
@@ -47,7 +40,7 @@
         fclose($fn);
         
         /* Write updated file content from raw_string into file. */
-        $newfile = fopen($file_path, "w") or die("Unable to open file!");
+        $newfile = fopen($file_path, "w") or die("Unable to update!");
         fwrite($newfile, $raw_string);
         fclose($newfile);
         echo "1";

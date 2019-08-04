@@ -1,14 +1,5 @@
 <?php
-
-    /* 
-    * Author      : Suraj Nanavare
-    * Created At  : 19th July 2019
-    * Description : This API fetch details of give projects (i.e Project Name & Date)
-    *               and list of students to be checked-In. This API returns output in
-    *               JSON format.
-    * Email ID    : surajsnanavare@gmail.com
-    */
-
+  
     try{
         /** Read parameter f: project file name and create fill path for specified file. */
         $file_name = $_GET['f'];

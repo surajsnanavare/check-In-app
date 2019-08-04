@@ -1,18 +1,24 @@
-/**
- * Author      : Suraj Nanavare
- * Created At  : 19th July 2019
- * Description : This is a commom javascript file for CheckIn app project. It contains 
- *               API calls and normal javascript functions. 
- * Modified At : 20th July 2019
- */
-
  
 /** Configuration Contants **/
+// determines the PHP script that is being called from this JS script 
 PROJECT_DETAILS_ENDPOINT = "APIs/get_project_details.php?f=";
 CHECKIN_API_ENDPOINT = "APIs/checkin_student.php";
 RESET_CHECKIN_API_ENDPOINT = "APIs/reset_checkin.php";
 TOTAL_PAGES = 1;
-PER_PAGE_RECORDS = 7;
+PER_PAGE_RECORDS = 100;
+
+/** List of Events
+    --------------
+    get_current_time: gets client device timestamp
+    get_project_details: takes details from text server file and populates into html page -> calls PHP script to get details 
+    checkin_student: checks student in -> calls PHP script to update file with timestamp
+    reset_checkin: reset check-in for one student (UNDO button) -> calls PHP script to update file to remove timestamp
+    reset_all_checkins: reset check-in for all student -> calls PHP script to update file and remove all timestamps
+    pagination: navigation between pages
+    navigate_page(direction): changes page depending on action called - back or next
+**/
+
+
 
 /** Function to get current time for Check-In **/
 function get_current_time() {
@@ -24,55 +30,71 @@ function get_current_time() {
     return time;
 };
 
-/** Function to get project & respective student details with checkIn and Reset button **/
+/** Function to get project & respective student details for teh initial load of the page -> page initial load/refresh and Reset **/
 function get_project_details() {
-    var url = new URL(window.location.href);
-    var project_name = url.searchParams.get('f');
+    var url = new URL(window.location.href); // Gets URL 
+    var project_name = url.searchParams.get('f'); //Find info in parameter 'f' i.e "robotic_19-07-2021.txt"
 
+    //Flag to identify Report ( 1 ) or Coordinator ( 0 ) 
     if (url.pathname.indexOf('/report') >= 0) {
         is_report = 1
     } else {
         is_report = 0
     };
 
+    //AJAX API calls to PHP script 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var project_details = JSON.parse(JSON.parse(this.responseText));
-            document.getElementById('project_name').innerText = project_details.project_name.toUpperCase();
+            document.getElementById('project_name').innerText = project_details.project_name.toUpperCase();  //calls project_details() from get_project_details.php  
             document.getElementById('date').innerText = project_details.date;
 
+            //Fills in student list on page 
             students = project_details.students;
             student_list = "";
             TOTAL_PAGES = Math.ceil(students.length / PER_PAGE_RECORDS);
             document.getElementById("total_pages").value = TOTAL_PAGES;
+
+            //List students on to the page 
             for (i = 0; i < students.length; i++) {
                 name = students[i].lname.trim() + ' ' + students[i].fname.trim();
                 timestamp = students[i].timestamp;
-                if (is_report == 0) {
+
+                if (is_report == 0) {       //Coordinator page (is_report == 0)
+
+                    //If the student is checked-in 
                     if (timestamp) {
                         student = '<tr class="record">\
                                         <td class="name-td" id="name_' + i + '">' + name + '</td> \
                                         <td class="action-td"> \
                                             <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)" disabled>' + timestamp + '</button> \
                                         </td><td>\
-                                            <button class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)"><img src="checkinapp/../static/icons/undo.png" width="10px"></button> \
+                                            <button class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)"><img src="undo.png" width="10px"></button> \
                                         </td>\
                                     </tr>';
-                    } else {
+                    } 
+
+                    //If the student is not checked-in 
+                    else {
                         student = '<tr class="record">\
                                     <td class="name-td" id="name_' + i + '">' + name + '</td> \
                                     <td class="action-td" style="display:contents"> \
-                                        <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)">Check In</button> \
+                                        <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)">Arrived</button> \
                                     </td><td>\
-                                        <button  class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)" disabled><img src="checkinapp/../static/icons/undo.png" width="10px"></button> \
+                                        <button  class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)" disabled><img src="undo.png" width="10px"></button> \
                                     </td>\
                                 </tr>';
                     }
-                } else {
+                } 
+                
+                //This is for Report page i.e. (is_report == 1)  
+                else {
+                    //If student is not checked in 
                     if (timestamp == null || timestamp == "undefined") {
-                        timestamp = "Not Checked In";
+                        timestamp = "Not Arrived";
                     }
+                    //If student is checked in 
                     student = '<tr class="record">\
                                 <td class="name-td">' + name + '</td>\
                                 <td class="action-td p10">' + timestamp + '</td>\
@@ -85,6 +107,7 @@ function get_project_details() {
             } else {
                 document.getElementById('student_list').innerHTML = "<tr><td>No Students</td></tr>";
             }
+            // pagination();
         }
     };
 
@@ -92,23 +115,23 @@ function get_project_details() {
     xmlhttp.send();
 }
 
-/** Function to add time of checking in file **/
+/** Function to add time of checking in of student into file **/
 function checkin_student(obj) {
     var id_number = obj.id.split("_")[1];
     var checkin_time = get_current_time();
-    var name = document.getElementById('name_' + id_number).innerText;
+    var name = document.getElementById('name_' + id_number).innerText;  //name is name_of_student
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
 
-    var query_string = "?f=" + project_name + "&checkin_time=" + checkin_time + "&name=" + name;
+    var query_string = "?f=" + project_name + "&checkin_time=" + checkin_time + "&name=" + name; //name is name_of_student
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText == checkin_time) {
-                document.getElementById('checkin_' + id_number).innerText = checkin_time;
-                document.getElementById('checkin_' + id_number).setAttribute('disabled', 'disabled');
-                document.getElementById('reset_' + id_number).removeAttribute('disabled');
+                document.getElementById('checkin_' + id_number).innerText = checkin_time;   //update checkin time for student on the Index.html 
+                document.getElementById('checkin_' + id_number).setAttribute('disabled', 'disabled'); //disables check_in button              
+                document.getElementById('reset_' + id_number).removeAttribute('disabled'); //re-enables check_in button
             } else {
                 alert(this.responseText);
             }
@@ -127,11 +150,12 @@ function reset_checkin(obj) {
 
     var query_string = "?f=" + project_name + "&name=" + name + "&reset_all=0";
 
+    // processes the data coming from API
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText == "1") {
-                document.getElementById('checkin_' + id_number).innerText = "Check In";
+                document.getElementById('checkin_' + id_number).innerText = "Arrived";
                 document.getElementById('checkin_' + id_number).removeAttribute('disabled');
                 document.getElementById('reset_' + id_number).setAttribute('disabled', 'disabled');
             } else {
@@ -139,6 +163,8 @@ function reset_checkin(obj) {
             }
         }
     };
+
+    // Sends Undo command to PHP 
     xmlhttp.open("GET", RESET_CHECKIN_API_ENDPOINT + query_string, true);
     xmlhttp.send();
 }
@@ -151,6 +177,8 @@ function reset_all_checkins() {
 
         var query_string = "?f=" + project_name + "&name=" + name + "&reset_all=1";
         var xmlhttp = new XMLHttpRequest();
+
+        // processes the data coming from API
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 if (this.responseText == "1") {
@@ -160,7 +188,55 @@ function reset_all_checkins() {
                 }
             }
         };
+        
+        // Sends reset command to PHP 
         xmlhttp.open("GET", RESET_CHECKIN_API_ENDPOINT + query_string, true);
         xmlhttp.send();
     }
 }
+
+// /** Function for pagination **/
+// function pagination() {
+//     var curr_page = document.getElementById("current_page").value;
+//     var total_pages = document.getElementById("total_pages").value;
+//     var records = document.getElementsByClassName('record');
+
+//     if (curr_page == 1) {
+//         document.getElementById("prev_button").setAttribute('disabled', 'disabled');
+
+//     } else {
+//         document.getElementById("prev_button").removeAttribute('disabled');
+//     }
+
+//     if (curr_page == total_pages) {
+//         document.getElementById("next_button").setAttribute('disabled', 'disabled');
+//     } else {
+//         document.getElementById("next_button").removeAttribute('disabled');
+//     }
+
+//     document.getElementById("current_page_label").innerText = curr_page;
+//     document.getElementById("total_pages_label").innerText = total_pages;
+
+//     for (record = 0; record < records.length; record++) {
+//         if (record < (curr_page * PER_PAGE_RECORDS) && record >= (curr_page * PER_PAGE_RECORDS) - PER_PAGE_RECORDS) {
+//             records[record].style.display = "";
+//         } else {
+//             records[record].style.display = "none";
+//         }
+//     }
+// }
+
+// /** Function to navigate Back and Forth in records in pagination **/
+// function navigate_page(direction) {
+//     var curr_page = document.getElementById("current_page");
+//     var total_pages = document.getElementById("total_pages").value;
+//     curr_page_value = curr_page.value;
+//     if (direction == "Next") {
+//         next_page = Number(curr_page_value) + Number(1);
+//     } else if (direction == "Prev") {
+//         next_page = Number(curr_page_value) - Number(1);
+//     }
+//     curr_page.value = next_page;
+//     pagination();
+// }
+

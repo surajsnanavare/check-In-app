@@ -1,9 +1,3 @@
-/**
- * Author      : Suraj Nanavare
- * Created At  : 19th July 2019
- * Description : This is a commom CSS file for CheckIn app project.
- * Email ID    : surajsnanavare@gmail.com
- **/
 
 html {
 	box-sizing: border-box;
@@ -35,7 +29,7 @@ body {
 }
 
 .main>.header {
-	background: blue;
+	background: rgb(52, 96, 218);
 	color: white;
 	padding: 10px;
 	padding-left: 20px;
