@@ -10,11 +10,15 @@
         $fn = fopen($file_path,"r");
         while(! feof($fn))  {
             $result = fgets($fn);
-            $name = explode(",",$result);
             if($result){
-                $name_details = array("fname"=>$name[1],"lname"=>trim($name[0], "\n"),"timestamp"=>$name[2]);
-                $lname = $name[1];
-                if(isset($name[0]) && isset($lname)){
+                $student_details = explode(";",$result);
+                $roll_no = $student_details[0];
+                $lname = $student_details[1];
+                $fname = $student_details[2];
+                $timestamp = $student_details[3];
+
+                $name_details = array("roll_no"=>trim($roll_no),"lname"=>trim($lname),"fname"=>trim($fname),"timestamp"=>trim($timestamp));
+                if(isset($roll_no)){
                     array_push($students,$name_details);
                 }
             }
@@ -24,9 +28,9 @@
         /** Extract project name and date from the filename provided as GET parameter. */
         $project_name = trim($file_name);
         $date = "";
-        
+
         /** Create a JSON object containing project info and student names with timestamp. */
-        $project_details = '{ "project_name" : "'.$project_name.'", "date" : "'.$date.'", "students":'.json_encode($students).'}';
+        $project_details = '{"project_name" : "'.$project_name.'", "date" : "'.$date.'", "students":'.json_encode($students).'}';
         echo json_encode($project_details);
     }catch(Exception $e){
         echo "Technical Problem Occured!";   

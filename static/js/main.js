@@ -47,6 +47,7 @@ function get_project_details() {
             //List students on to the page 
             for (i = 0; i < students.length; i++) {
                 name = students[i].lname.trim() + ' ' + students[i].fname.trim();
+                roll_no = students[i].roll_no.trim();
                 timestamp = students[i].timestamp;
 
                 if (is_report == 0) {       //Coordinator page (is_report == 0)
@@ -54,11 +55,11 @@ function get_project_details() {
                     //If the student is checked-in 
                     if (timestamp) {
                         student = '<tr class="record">\
-                                        <td class="name-td" id="name_' + i + '">' + name + '</td> \
+                                        <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
                                         <td class="action-td"> \
-                                            <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)" disabled>' + timestamp + '</button> \
+                                            <button class="btn btn-small btn-teal p10" id="checkin_' + roll_no + '" onclick="checkin_student(this)" disabled>' + timestamp + '</button> \
                                         </td><td>\
-                                            <button class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)"><img src="undo.png" width="10px"></button> \
+                                            <button class="btn btn-small btn-teal p10" id="reset_' + roll_no + '" onclick="reset_checkin(this)"><img src="undo.png" width="10px"></button> \
                                         </td>\
                                     </tr>';
                     } 
@@ -66,11 +67,11 @@ function get_project_details() {
                     //If the student is not checked-in 
                     else {
                         student = '<tr class="record">\
-                                    <td class="name-td" id="name_' + i + '">' + name + '</td> \
+                                    <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
                                     <td class="action-td" style="display:contents"> \
-                                        <button class="btn btn-small btn-teal p10" id="checkin_' + i + '" onclick="checkin_student(this)">Arrived</button> \
+                                        <button class="btn btn-small btn-teal p10" id="checkin_' + roll_no + '" onclick="checkin_student(this)">Arrived</button> \
                                     </td><td>\
-                                        <button  class="btn btn-small btn-teal p10" id="reset_' + i + '" onclick="reset_checkin(this)" disabled><img src="undo.png" width="10px"></button> \
+                                        <button  class="btn btn-small btn-teal p10" id="reset_' + roll_no + '" onclick="reset_checkin(this)" disabled><img src="undo.png" width="10px"></button> \
                                     </td>\
                                 </tr>';
                     }
@@ -105,20 +106,19 @@ function get_project_details() {
 
 /** Function to add time of checking in of student into file **/
 function checkin_student(obj) {
-    var id_number = obj.id.split("_")[1];
-    var name = document.getElementById('name_' + id_number).innerText;  //name is name_of_student
+    var roll_no = obj.id.split("_")[1];
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
 
-    var query_string = "?f=" + project_name + "&name=" + name; //name is name_of_student
+    var query_string = "?f=" + project_name + "&roll_no=" + roll_no; //name is name_of_student
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText.split(":").length == 3) {
-                document.getElementById('checkin_' + id_number).innerText = this.responseText;   //update checkin time for student on the Index.html 
-                document.getElementById('checkin_' + id_number).setAttribute('disabled', 'disabled'); //disables check_in button              
-                document.getElementById('reset_' + id_number).removeAttribute('disabled'); //re-enables check_in button
+                document.getElementById('checkin_' + roll_no).innerText = this.responseText;   //update checkin time for student on the Index.html 
+                document.getElementById('checkin_' + roll_no).setAttribute('disabled', 'disabled'); //disables check_in button              
+                document.getElementById('reset_' + roll_no).removeAttribute('disabled'); //re-enables check_in button
             } else {
                 alert(this.responseText);
             }
@@ -130,21 +130,20 @@ function checkin_student(obj) {
 
 /** Function to reset checkIn time of indivisual student **/
 function reset_checkin(obj) {
-    var id_number = obj.id.split("_")[1];
-    var name = document.getElementById('name_' + id_number).innerText;
+    var roll_no = obj.id.split("_")[1];
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
 
-    var query_string = "?f=" + project_name + "&name=" + name + "&reset_all=0";
+    var query_string = "?f=" + project_name + "&roll_no=" + roll_no + "&reset_all=0";
 
     // processes the data coming from API
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText == "1") {
-                document.getElementById('checkin_' + id_number).innerText = "Arrived";
-                document.getElementById('checkin_' + id_number).removeAttribute('disabled');
-                document.getElementById('reset_' + id_number).setAttribute('disabled', 'disabled');
+                document.getElementById('checkin_' + roll_no).innerText = "Arrived";
+                document.getElementById('checkin_' + roll_no).removeAttribute('disabled');
+                document.getElementById('reset_' + roll_no).setAttribute('disabled', 'disabled');
             } else {
                 alert(this.responseText);
             }
