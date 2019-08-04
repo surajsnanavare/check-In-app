@@ -1,11 +1,11 @@
 <?php
 
-
+    include_once 'utils.php';
     try{
         /* Read parameters f: Project name, name: name of student, and checkin time. */
         $file_name = $_GET['f'];
         $name = $_GET['name'];
-        $checkin_time = $_GET['checkin_time'];
+        $checkin_time = get_server_time();
         $file_path = "../data/".$file_name;
 
         /* Extract first name and last name from the name. Instantiate raw string to hold 

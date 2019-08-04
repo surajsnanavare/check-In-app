@@ -1,5 +1,5 @@
 <?php
-  
+
     try{
         /** Read parameter f: project file name and create fill path for specified file. */
         $file_name = $_GET['f'];
@@ -22,9 +22,9 @@
         fclose($fn);
 
         /** Extract project name and date from the filename provided as GET parameter. */
-        $project_name = explode("_",$file_name)[0];
-        $date = explode(".txt",explode("_",$file_name)[1])[0];
-
+        $project_name = trim($file_name);
+        $date = "";
+        
         /** Create a JSON object containing project info and student names with timestamp. */
         $project_details = '{ "project_name" : "'.$project_name.'", "date" : "'.$date.'", "students":'.json_encode($students).'}';
         echo json_encode($project_details);

@@ -18,18 +18,6 @@ PER_PAGE_RECORDS = 100;
     navigate_page(direction): changes page depending on action called - back or next
 **/
 
-
-
-/** Function to get current time for Check-In **/
-function get_current_time() {
-    var date = new Date();
-    var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-    var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-    time = hours + ":" + minutes + ":" + seconds;
-    return time;
-};
-
 /** Function to get project & respective student details for teh initial load of the page -> page initial load/refresh and Reset **/
 function get_project_details() {
     var url = new URL(window.location.href); // Gets URL 
@@ -118,18 +106,17 @@ function get_project_details() {
 /** Function to add time of checking in of student into file **/
 function checkin_student(obj) {
     var id_number = obj.id.split("_")[1];
-    var checkin_time = get_current_time();
     var name = document.getElementById('name_' + id_number).innerText;  //name is name_of_student
     var url = new URL(window.location.href);
     var project_name = url.searchParams.get('f');
 
-    var query_string = "?f=" + project_name + "&checkin_time=" + checkin_time + "&name=" + name; //name is name_of_student
+    var query_string = "?f=" + project_name + "&name=" + name; //name is name_of_student
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            if (this.responseText == checkin_time) {
-                document.getElementById('checkin_' + id_number).innerText = checkin_time;   //update checkin time for student on the Index.html 
+            if (this.responseText.split(":").length == 3) {
+                document.getElementById('checkin_' + id_number).innerText = this.responseText;   //update checkin time for student on the Index.html 
                 document.getElementById('checkin_' + id_number).setAttribute('disabled', 'disabled'); //disables check_in button              
                 document.getElementById('reset_' + id_number).removeAttribute('disabled'); //re-enables check_in button
             } else {
@@ -239,4 +226,14 @@ function reset_all_checkins() {
 //     curr_page.value = next_page;
 //     pagination();
 // }
+
+// /** Function to get current time for Check-In **/
+// function get_current_time() {
+//     var date = new Date();
+//     var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+//     var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+//     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+//     time = hours + ":" + minutes + ":" + seconds;
+//     return time;
+// };
 
