@@ -1,5 +1,9 @@
 Student,1
+<<<<<<< HEAD
 Student,2,17:49:33
+=======
+Student,2
+>>>>>>> 3cae835db600a7e7648834d8d5ca8917f9dda17b
 Student,3
 Student,4
 Student,5
