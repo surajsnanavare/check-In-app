@@ -1,7 +1,7 @@
  
 /** Configuration Contants **/
 // determines the PHP script that is being called from this JS script 
-PROJECT_DETAILS_ENDPOINT = "APIs/get_project_details.php?f=";
+PROJECT_DETAILS_ENDPOINT = "APIs/get_project_details.php";
 CHECKIN_API_ENDPOINT = "APIs/checkin_student.php";
 RESET_CHECKIN_API_ENDPOINT = "APIs/reset_checkin.php";
 TOTAL_PAGES = 1;
@@ -19,22 +19,29 @@ PER_PAGE_RECORDS = 100;
 **/
 
 /** Function to get project & respective student details for teh initial load of the page -> page initial load/refresh and Reset **/
-function get_project_details() {
+function get_project_details(obj) {
     var url = new URL(window.location.href); // Gets URL 
     var project_name = url.searchParams.get('f'); //Find info in parameter 'f' i.e "robotic_19-07-2021.txt"
+
+    var query_string = "?f=" + project_name + "&role=" + role; //Role may be Coordinator(CO)  or Supervisor(SU)
+    var role = "";
 
     //Flag to identify Report ( 1 ) or Coordinator ( 0 ) 
     if (url.pathname.indexOf('/report') >= 0) {
         is_report = 1
+        role = 'SU';
     } else {
         is_report = 0
+        role = 'CO';
     };
 
     //AJAX API calls to PHP script 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
             var project_details = JSON.parse(JSON.parse(this.responseText));
+            
             document.getElementById('project_name').innerText = project_details.project_name.toUpperCase();  //calls project_details() from get_project_details.php  
             document.getElementById('date').innerText = project_details.date;
 
@@ -46,11 +53,13 @@ function get_project_details() {
 
             //List students on to the page 
             for (i = 0; i < students.length; i++) {
-                name = students[i].lname.trim() + ' ' + students[i].fname.trim();
+                lname = students[i].lname.trim();
+                fname = students[i].fname.trim();
                 roll_no = students[i].roll_no.trim();
                 timestamp = students[i].timestamp;
+                name = lname + ' ' + fname;
 
-                if (is_report == 0) {       //Coordinator page (is_report == 0)
+                if (is_report == 0) {     //Coordinator page (is_report == 0)
 
                     //If the student is checked-in 
                     if (timestamp) {
@@ -67,12 +76,12 @@ function get_project_details() {
                     //If the student is not checked-in 
                     else {
                         student = '<tr class="record">\
-                                    <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
-                                    <td class="action-td" style="display:contents"> \
-                                        <button class="btn btn-small btn-teal p10" id="checkin_' + roll_no + '" onclick="checkin_student(this)">Arrived</button> \
-                                    </td><td>\
-                                        <button  class="btn btn-small btn-teal p10" id="reset_' + roll_no + '" onclick="reset_checkin(this)" disabled><img src="undo.png" width="10px"></button> \
-                                    </td>\
+                                        <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
+                                        <td class="action-td" style="display:contents"> \
+                                            <button class="btn btn-small btn-teal p10" id="checkin_' + roll_no + '" onclick="checkin_student(this)">Arrived</button> \
+                                        </td><td>\
+                                            <button  class="btn btn-small btn-teal p10" id="reset_' + roll_no + '" onclick="reset_checkin(this)" disabled><img src="undo.png" width="10px"></button> \
+                                        </td>\
                                 </tr>';
                     }
                 } 
@@ -80,14 +89,31 @@ function get_project_details() {
                 //This is for Report page i.e. (is_report == 1)  
                 else {
                     //If student is not checked in 
-                    if (timestamp == null || timestamp == "undefined") {
+                    if (timestamp == null || timestamp == "undefined" || timestamp == "") {
                         timestamp = "Not Arrived";
                     }
+                    
+                    if(roll_no){
+                        var roll_no_row   = '<td>' + roll_no + '</td>';
+                    }
+
+                    if(fname){
+                        var fname_row   = '<td class="name-td">' + fname + '</td>';
+                    }
+
+                    if(lname){
+                        var lname_row   = '<td class="name-td">' + lname + '</td>';
+                    }
+
+                    var timestamp_row = '<td class="action-td p10">' + timestamp + '</td>';
+
                     //If student is checked in 
-                    student = '<tr class="record">\
-                                <td class="name-td">' + name + '</td>\
-                                <td class="action-td p10">' + timestamp + '</td>\
-                            </tr>';
+                    student =  '<tr class="record">' + 
+                                    roll_no_row + 
+                                    fname_row +
+                                    lname_row + 
+                                    timestamp_row +
+                               '</tr>';
                 }
                 student_list = student_list + student;
             }
@@ -100,7 +126,7 @@ function get_project_details() {
         }
     };
 
-    xmlhttp.open("GET", PROJECT_DETAILS_ENDPOINT + project_name, true);
+    xmlhttp.open("GET", PROJECT_DETAILS_ENDPOINT + query_string, true);
     xmlhttp.send();
 }
 

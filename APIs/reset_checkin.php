@@ -8,11 +8,7 @@
         $reset_all = $_GET['reset_all'];
         $file_path = "../data/" . $file_name;
         
-        /* Split name into firstname and lastname and instantiate raw_string 
-        to hold updated file contnets. */
-        // $requested_name  = explode(" ", $name);
-        // $requested_lname = $requested_name[0];
-        // $requested_fname = $requested_name[1];
+        /* Instantiate raw_string to hold updated file contnets. */
         $raw_string = "";
         
         /* Read file line by line and update timestamp and build updated raw string. */
@@ -29,12 +25,12 @@
                 if (isset($roll_no)) {
                     if ( $roll_no == $requested_roll_no || $reset_all == 1) {  //JS function calls with flag of 0 for one student OR 1 for all students
                         $entry_without_checkin_time = $roll_no.";".$lname.";".$fname.";"."\n";
-                        $raw_string              = $raw_string.$entry_without_checkin_time;
+                        $raw_string                 = $raw_string.$entry_without_checkin_time;
                     } else {
                         $raw_string = $raw_string . $result;
                     }
                 }
-                
+
             }
         }
         fclose($fn);

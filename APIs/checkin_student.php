@@ -8,11 +8,7 @@
         $checkin_time = get_server_time();
         $file_path = "../data/".$file_name;
 
-        /* Extract first name and last name from the name. Instantiate raw string to hold 
-          updated file stream. */
-        // $requested_name = explode(" ",$name);
-        // $requested_lname = $requested_name[0];
-        // $requested_fname = $requested_name[1];
+        /* Instantiate raw string to hold updated file stream. */
         $raw_string = "";
 
         /* Read file and update timestamp for given student and update in raw string. */
