@@ -1,13 +1,13 @@
 <?php
 
-    include_once 'utils.php';
+    include_once '../APIs/utils.php';
     try{
         /* Read parameters f: Project name, name: name of student, and checkin time. */
         $file_name = $_GET['f'];
         $requested_roll_no = $_GET['roll_no'];
         $checkin_time = get_server_time();
-        $file_path = "../data/".$file_name;
-
+        $file_path = "./../data/".$file_name;
+        
         /* Instantiate raw string to hold updated file stream. */
         $raw_string = "";
 

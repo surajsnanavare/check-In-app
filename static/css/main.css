@@ -21,6 +21,7 @@ body {
 	margin: auto;
 	max-width: 40%;
 	min-height: 100%;
+	overflow-y: scroll; 
 	border: 1px solid #8080802e;
 }
 
@@ -133,6 +134,9 @@ body {
 	padding-right: 5px;
 }
 
+.record {
+	box-shadow: 0 0px 3px 0 rgba(0,0,0,0.2);
+}
 td {
 	font-size: 0.9em;
 }

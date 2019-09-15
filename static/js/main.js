@@ -23,25 +23,20 @@ function get_project_details(obj) {
     var url = new URL(window.location.href); // Gets URL 
     var project_name = url.searchParams.get('f'); //Find info in parameter 'f' i.e "robotic_19-07-2021.txt"
 
-    var query_string = "?f=" + project_name + "&role=" + role; //Role may be Coordinator(CO)  or Supervisor(SU)
-    var role = "";
-
     //Flag to identify Report ( 1 ) or Coordinator ( 0 ) 
     if (url.pathname.indexOf('/report') >= 0) {
-        is_report = 1
-        role = 'SU';
+        is_report = 1;
     } else {
-        is_report = 0
-        role = 'CO';
+        is_report = 0;
     };
-
+    
+    var query_string = "?f=" + project_name + "&is_report=" + is_report;
+   
     //AJAX API calls to PHP script 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
             var project_details = JSON.parse(JSON.parse(this.responseText));
-            
             document.getElementById('project_name').innerText = project_details.project_name.toUpperCase();  //calls project_details() from get_project_details.php  
             document.getElementById('date').innerText = project_details.date;
 
@@ -53,14 +48,13 @@ function get_project_details(obj) {
 
             //List students on to the page 
             for (i = 0; i < students.length; i++) {
-                lname = students[i].lname.trim();
-                fname = students[i].fname.trim();
+                // lname = students[i].lname.trim();
+                // fname = students[i].fname.trim();
                 roll_no = students[i].roll_no.trim();
-                timestamp = students[i].timestamp;
-                name = lname + ' ' + fname;
+                timestamp = students[i].timestamp.trim();
+                name = students[i].name;
 
-                if (is_report == 0) {     //Coordinator page (is_report == 0)
-
+                if (is_report == 0) {     //Coordinator page (is_report == 0)                    
                     //If the student is checked-in 
                     if (timestamp) {
                         student = '<tr class="record">\
@@ -77,8 +71,8 @@ function get_project_details(obj) {
                     else {
                         student = '<tr class="record">\
                                         <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
-                                        <td class="action-td" style="display:contents"> \
-                                            <button class="btn btn-small btn-teal p10" id="checkin_' + roll_no + '" onclick="checkin_student(this)">Arrived</button> \
+                                        <td class="action-td"> \
+                                            <button class="btn btn-small btn-teal p10" id="checkin_' + roll_no + '" onclick="checkin_student(this)" style="width:73px;">Arrived</button> \
                                         </td><td>\
                                             <button  class="btn btn-small btn-teal p10" id="reset_' + roll_no + '" onclick="reset_checkin(this)" disabled><img src="undo.png" width="10px"></button> \
                                         </td>\
@@ -88,32 +82,28 @@ function get_project_details(obj) {
                 
                 //This is for Report page i.e. (is_report == 1)  
                 else {
-                    //If student is not checked in 
-                    if (timestamp == null || timestamp == "undefined" || timestamp == "") {
-                        timestamp = "Not Arrived";
-                    }
                     
-                    if(roll_no){
-                        var roll_no_row   = '<td>' + roll_no + '</td>';
+                    //If the student is checked-in 
+                    
+                    if (timestamp) {
+                        student = '<tr class="record">\
+                                        <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
+                                        <td>\
+                                            <td class="action-td p10" style="background: #009688;color: white;">' + timestamp + '</td>\
+                                        </td>\
+                                    </tr>';
+                    } 
+
+                    //If the student is not checked-in 
+                    else {
+                        student = '<tr class="record">\
+                                        <td class="name-td" id="name_' + roll_no + '">' + name + '</td> \
+                                        <td>\
+                                            <td class="action-td p10" style="background:#ff010187"> Not Arrived </td>\
+                                        </td>\
+                                    </tr>';
                     }
 
-                    if(fname){
-                        var fname_row   = '<td class="name-td">' + fname + '</td>';
-                    }
-
-                    if(lname){
-                        var lname_row   = '<td class="name-td">' + lname + '</td>';
-                    }
-
-                    var timestamp_row = '<td class="action-td p10">' + timestamp + '</td>';
-
-                    //If student is checked in 
-                    student =  '<tr class="record">' + 
-                                    roll_no_row + 
-                                    fname_row +
-                                    lname_row + 
-                                    timestamp_row +
-                               '</tr>';
                 }
                 student_list = student_list + student;
             }
@@ -170,6 +160,8 @@ function reset_checkin(obj) {
                 document.getElementById('checkin_' + roll_no).innerText = "Arrived";
                 document.getElementById('checkin_' + roll_no).removeAttribute('disabled');
                 document.getElementById('reset_' + roll_no).setAttribute('disabled', 'disabled');
+                document.getElementById('reset_' + roll_no).setAttribute('style', 'width:73%');
+
             } else {
                 alert(this.responseText);
             }
@@ -206,59 +198,4 @@ function reset_all_checkins() {
         xmlhttp.send();
     }
 }
-
-// /** Function for pagination **/
-// function pagination() {
-//     var curr_page = document.getElementById("current_page").value;
-//     var total_pages = document.getElementById("total_pages").value;
-//     var records = document.getElementsByClassName('record');
-
-//     if (curr_page == 1) {
-//         document.getElementById("prev_button").setAttribute('disabled', 'disabled');
-
-//     } else {
-//         document.getElementById("prev_button").removeAttribute('disabled');
-//     }
-
-//     if (curr_page == total_pages) {
-//         document.getElementById("next_button").setAttribute('disabled', 'disabled');
-//     } else {
-//         document.getElementById("next_button").removeAttribute('disabled');
-//     }
-
-//     document.getElementById("current_page_label").innerText = curr_page;
-//     document.getElementById("total_pages_label").innerText = total_pages;
-
-//     for (record = 0; record < records.length; record++) {
-//         if (record < (curr_page * PER_PAGE_RECORDS) && record >= (curr_page * PER_PAGE_RECORDS) - PER_PAGE_RECORDS) {
-//             records[record].style.display = "";
-//         } else {
-//             records[record].style.display = "none";
-//         }
-//     }
-// }
-
-// /** Function to navigate Back and Forth in records in pagination **/
-// function navigate_page(direction) {
-//     var curr_page = document.getElementById("current_page");
-//     var total_pages = document.getElementById("total_pages").value;
-//     curr_page_value = curr_page.value;
-//     if (direction == "Next") {
-//         next_page = Number(curr_page_value) + Number(1);
-//     } else if (direction == "Prev") {
-//         next_page = Number(curr_page_value) - Number(1);
-//     }
-//     curr_page.value = next_page;
-//     pagination();
-// }
-
-// /** Function to get current time for Check-In **/
-// function get_current_time() {
-//     var date = new Date();
-//     var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-//     var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-//     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-//     time = hours + ":" + minutes + ":" + seconds;
-//     return time;
-// };
 

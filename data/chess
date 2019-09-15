@@ -1,35 +1,22 @@
-Student,1
-<<<<<<< HEAD
-Student,2,17:49:33
-=======
-Student,2
->>>>>>> 3cae835db600a7e7648834d8d5ca8917f9dda17b
-Student,3
-Student,4
-Student,5
-Student,6
-Student,7
-Student,8
-Student,9
-Student,10
-Student,11
-Student,12
-Student,13
-Student,14
-Student,15
-Student,16
-Student,17
-Student,18
-Student,19
-Student,20
-Student,21
-Student,22
-Student,23
-Student,24
-Student,25
-Student,26
-Student,27
-Student,28
-Student,29
-Student,30
-Student,31
+1;Jason;Suraj Brown;04:07:54
+2;John;Adam;
+3;Mac;Will;04:22:59
+4;Drew;Mcpherson;
+5;Suraj;Kumar Sing;04:07:58
+6;;Wu Lee;04:08:04
+7;Xi Yi;;04:08:01
+8;last name;first name;04:08:01
+9;Jason;Suraj Brown;04:07:54
+10;John;Adam;
+11;Mac;Will;04:22:59
+12;Drew;Mcpherson;
+13;Suraj;Kumar Sing;04:07:58
+14;;Wu Lee;04:08:04
+15;Xi Yi;;04:08:01
+16;last name;first name;04:08:01
+17;Mac;Will;04:22:59
+18;Drew;Mcpherson;
+19;Suraj;Kumar Sing;04:07:58
+20;;Wu Lee;04:08:04
+21;Xi Yi;;04:08:01
+22;last name;first name;04:08:01

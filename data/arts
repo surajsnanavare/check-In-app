@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-1;Jason;Suraj Brown;11:40:35
+1;Jason;Suraj Brown;
 2;John;Adam;
-3;Mac;Will;
-4;Drew;Mcpherson;
-5;Suraj;Kumar Sing;11:22:56
-6;Kim;Wu Lee;02:45:07
-7;Xi;Ping;
-=======
-Jason, Brown 
-John, Adam 
-Mac, Will
-Drew, Mcpherson 
-Suraj, Prasad
-Kim, Wu Lee
-Xi, Ping 
->>>>>>> 3cae835db600a7e7648834d8d5ca8917f9dda17b
+3;Mac;Will;03:18:37
+4;Drew;Mcpherson;03:29:00
+5;Suraj;Kumar Sing;
+6;;Wu Lee;
+7;Xi Yi;;
+8;last name;first name;
